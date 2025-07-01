@@ -1,6 +1,5 @@
-modLoader = "javafml"
+modLoader = "kotlinforforge"
 loaderVersion = "[2,)"
-issueTrackerURL = "${mod_issue_tracker}"
 license = "${mod_license}"
 
 [[mods]]
@@ -19,3 +18,8 @@ license = "${mod_license}"
 [[dependencies.${mod_id}]]
     modId = "minecraft"
     type = "required"
+
+[[dependencies.${mod_id}]]
+    modId = "kotlinforforge"
+    type = "required"
+

@@ -5,6 +5,7 @@ pluginManagement {
 
         // Modstitch
         maven("https://maven.isxander.dev/releases/")
+        maven("https://maven.isxander.dev/snapshots/")
 
         // Loom platform
         maven("https://maven.fabricmc.net/")
@@ -15,19 +16,18 @@ pluginManagement {
         // Stonecutter
         maven("https://maven.kikugie.dev/releases")
         maven("https://maven.kikugie.dev/snapshots")
-
-        // Modstitch
-        maven("https://maven.isxander.dev/releases")
     }
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.6+"
+    id("dev.kikugie.stonecutter") version "0.7-beta.3"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 stonecutter {
     kotlinController = true
     centralScript = "build.gradle.kts"
+
 
     create(rootProject) {
         /**
@@ -38,14 +38,17 @@ stonecutter {
             loaders.forEach { vers("$name-$it", mcVersion) }
 
         // Configure your targets here!
+        mc("1.21.6", loaders = listOf("fabric", "neoforge"))
+        mc("1.21.5", loaders = listOf("fabric", "neoforge"))
         mc("1.21.4", loaders = listOf("fabric", "neoforge"))
-        mc("1.20.1", loaders = listOf("forge"))
+
+        mc("1.21.1", loaders = listOf("fabric", "neoforge"))
 
         // This is the default target.
         // https://stonecutter.kikugie.dev/stonecutter/guide/setup#settings-settings-gradle-kts
-        vcsVersion = "1.21.4-fabric"
+        vcsVersion = "1.21.6-fabric"
     }
 }
 
-rootProject.name = "Example Mod"
+rootProject.name = "replanter"
 

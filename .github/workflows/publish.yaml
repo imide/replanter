@@ -1,0 +1,45 @@
+name: publish.yaml
+on:
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build with gradle
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get mod version
+        id: version
+        run: |
+          echo "::set-output name=VER::$(grep '^modVersion=' gradle.properties | cut -d'=' -f2)"
+      - name: Fail if version already published
+        run: |
+          if git rev-parse -q --verify "refs/tags/v${{ steps.version.outputs.VER }}" >/dev/null; then
+            echo "✋ Version ${{ steps.version.outputs.VER }} already exists, aborting."
+            exit 1
+          fi
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: gradle
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build all
+        run: ./gradlew buildAndCollect --stacktrace
+
+      - name: Publish to Modrinth
+        run: ./gradlew releaseMod --stacktrace -Pmodrinth.token=${{ secrets.MODRINTH_TOKEN }}
+
+      - name: Create git tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v${{ steps.version.outputs.VER }}
+          git push origin v${{ steps.version.outputs.VER }}
+

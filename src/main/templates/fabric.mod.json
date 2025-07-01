@@ -4,10 +4,28 @@
   "name": "${mod_name}",
   "version": "${mod_version}",
   "description": "${mod_description}",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
-      "com.example.mymod.FabricEntrypoint"
+      {
+        "adapter": "kotlin",
+        "value": "xyz.imide.replanter.loaders.fabric.FabricEntrypoint"
+      }
     ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "fabric-api": "*",
+    "resourcefulconfig": ">=${rconfig}",
+    "minecraft": "${target_minecraft}",
+    "fabric-language-kotlin": ">=${flk}"
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+  "breaks": {
+    "feather": "*",
+    "labymod": "*",
+    "ichor": "*"
   }
 }
