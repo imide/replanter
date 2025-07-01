@@ -36,7 +36,7 @@ jobs:
         run: ./gradlew buildAndCollect --stacktrace
 
       - name: Publish to Modrinth
-        run: ./gradlew releaseMod --stacktrace -Pmodrinth.token=${{ secrets.MODRINTH_TOKEN }}
+        run: ./gradlew releaseModVersion --stacktrace -Pmodrinth.token=${{ secrets.MODRINTH_TOKEN }}
 
       - name: Create git tag
         run: |

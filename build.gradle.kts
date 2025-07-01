@@ -223,7 +223,7 @@ tasks {
 
         file = modstitch.finalJarTask.flatMap { it.archiveFile }
 
-        displayName = "$version for $loader $mcVersion"
+        displayName = "$modVersion for $loader $mcVersion"
         modLoaders.add(loader)
 
         fun versionList(prop: String) = findProperty(prop)?.toString()
@@ -234,10 +234,10 @@ tasks {
         val stableMCVersions = versionList("pub.stable")
         val modrinthId: String by project
 
-        if (modrinthId.isNotBlank() && hasProperty("modrinth.token")) {
+        if (modrinthId.isNotBlank() && hasProperty("modrinthToken")) {
             modrinth {
                 projectId.set(modrinthId)
-                accessToken.set(findProperty("modrinth.token")?.toString())
+                accessToken.set(findProperty("modrinthToken")?.toString())
                 minecraftVersions.addAll(stableMCVersions)
 
                 requires { slug.set("resourceful-config") }
@@ -247,7 +247,7 @@ tasks {
                     requires { slug.set("fabric-api") }
                     optional { slug.set("modmenu") }
                 } else {
-                    requires { "kotlin-for-forge" }
+                    requires { slug.set("kotlin-for-forge") }
                 }
             }
         }
@@ -274,8 +274,6 @@ val releaseModVersion by tasks.registering {
     group = "replanter/versioned"
 
     dependsOn("publishMods")
-
-    if (!project.publishMods.dryRun.get()) dependsOn("publish")
 }
 createActiveTask(releaseModVersion)
 
