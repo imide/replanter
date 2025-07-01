@@ -29,7 +29,9 @@ jobs:
           distribution: temurin
           cache: gradle
       - name: Setup gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
       - name: Build all
         run: ./gradlew buildAndCollect --stacktrace
 
