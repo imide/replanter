@@ -8,7 +8,7 @@ ktlint = "1.6.0"
 
 [plugins]
 indraGit = { id = "net.kyori.indra.git", version.ref = "indra" }
-spotless = { id = "com.diffplug.spotless", version = "8.2.0" }
+spotless = { id = "com.diffplug.spotless", version = "8.2.1" }
 modPublishPlugin = { id = "me.modmuss50.mod-publish-plugin", version = "0.8.4" }
 modstitch = { id = "dev.isxander.modstitch.base", version.ref = "modstitch" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
