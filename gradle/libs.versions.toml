@@ -1,6 +1,6 @@
 [versions]
 indra = "4.0.0"
-modstitch = "0.5.16-unstable"
+modstitch = "0.8.4"
 kotlin = "2.2.0"
 ktlint = "1.6.0"
 
