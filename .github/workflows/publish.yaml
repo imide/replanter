@@ -9,7 +9,7 @@ jobs:
     name: Build with gradle
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Get mod version
         id: version
