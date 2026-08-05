@@ -1,25 +1,25 @@
-package com.example.modtemplate;
+package xyz.imide.replanter;
 
-import com.example.modtemplate.platform.Platform;
+import xyz.imide.replanter.platform.Platform;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //? fabric {
-import com.example.modtemplate.platform.fabric.FabricPlatform;
+import xyz.imide.replanter.platform.fabric.FabricPlatform;
 //?} neoforge {
-/*import com.example.modtemplate.platform.neoforge.NeoforgePlatform;
+/*import xyz.imide.replanter.platform.neoforge.NeoforgePlatform;
  *///?} forge {
-/*import com.example.modtemplate.platform.forge.ForgePlatform;
+/*import xyz.imide.replanter.platform.forge.ForgePlatform;
  *///?}
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class ModTemplate {
 
-	public static final String MOD_ID = /*$ mod_id*/ "modtemplate";
-	public static final String MOD_VERSION = /*$ mod_version*/ "0.1.0";
-	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "Mod Template";
+	public static final String MOD_ID = /*$ mod_id*/ "replanter";
+	public static final String MOD_VERSION = /*$ mod_version*/ "2.0.0";
+	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "Replanter";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	private static final Platform PLATFORM = createPlatformInstance();
@@ -48,19 +48,19 @@ public class ModTemplate {
 		 *///?}
 	}
 
-	private static ResourceLocation id(String path) {
+	private static Identifier id(String path) {
 		//? > 1.19.2 {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 		 //?} <= 1.19.2 {
-		/*return new ResourceLocation(MOD_ID, path);
+		/*return new Identifier(MOD_ID, path);
 		*///?}
 	}
 
-	private static ResourceLocation id(String namespace, String path) {
+	private static Identifier id(String namespace, String path) {
 		//? > 1.19.2 {
-		return ResourceLocation.fromNamespaceAndPath(namespace, path);
+		return Identifier.fromNamespaceAndPath(namespace, path);
 		 //?} <= 1.19.2 {
-		/*return new ResourceLocation(namespace, path);
+		/*return new Identifier(namespace, path);
 		*///?}
 	}
 }

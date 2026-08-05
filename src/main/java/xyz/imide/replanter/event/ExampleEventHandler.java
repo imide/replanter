@@ -1,6 +1,6 @@
-package com.example.modtemplate.event;
+package xyz.imide.replanter.event;
 
-import com.example.modtemplate.ModTemplate;
+import xyz.imide.replanter.ModTemplate;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Objects;
@@ -11,9 +11,9 @@ public class ExampleEventHandler {
 		//? if > 1.19.2 {
 		// MinecraftServer.pvp is private... only here to test ATs/AWs
 		//? if < 26.1.2
-		boolean pvp = Objects.requireNonNull(player.getServer()).pvp;
+		//boolean pvp = Objects.requireNonNull(player.getServer()).pvp;
 		//? if >= 26.1.2
-		//boolean pvp = Objects.requireNonNull(player.level()).isPvpAllowed();
+		boolean pvp = Objects.requireNonNull(player.level()).isPvpAllowed();
 		if (pvp) {
 			ModTemplate.LOGGER.info("{} took damage. PVP is allowed.", player.getDisplayName());
 		} else {

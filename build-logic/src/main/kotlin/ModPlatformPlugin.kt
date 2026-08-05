@@ -11,17 +11,24 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.Property
+import org.gradle.api.services.BuildService
+import org.gradle.api.services.BuildServiceParameters
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.internal.extensions.stdlib.toDefaultLowerCase
 import org.gradle.jvm.tasks.Jar
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.*
+import org.gradle.language.java.internal.JavaLanguageServices
 import org.gradle.language.jvm.tasks.ProcessResources
 import org.gradle.plugins.ide.idea.model.IdeaModel
 import java.util.Properties
 import javax.inject.Inject
+
+// This whole thing prevents neoforge from frying your computer by recompiling Minecraft on multiple versions
+interface NeoForgeMutex : BuildService<BuildServiceParameters.None>
 
 val Project.sc: StonecutterBuildExtension
 	get() = extensions.getByType<StonecutterBuildExtension>()
@@ -123,6 +130,10 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 		configureJava(ctx)
 		registerBuildAndCollectTask(ctx)
 
+		if (!ctx.loader.isFabricLike) {
+			configureNeoforgeMutex(ctx)
+		}
+
 		configureModPublishing(ctx)
 
 		if (envTrue("PUB_MAVEN_ENABLE")) {
@@ -136,6 +147,19 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 			withJavadocJar()
 			sourceCompatibility = ctx.javaVersion
 			targetCompatibility = ctx.javaVersion
+			toolchain {
+				languageVersion.set(JavaLanguageVersion.of(ctx.javaVersion.majorVersion))
+			}
+		}
+	}
+
+	private fun Project.configureNeoforgeMutex(ctx: Context) {
+		val mutex = gradle.sharedServices.registerIfAbsent("createMinecraftArtifactsMutex", NeoForgeMutex::class.java) {
+			maxParallelUsages.set(1)
+		}
+
+		tasks.named { it == "createMinecraftArtifacts" }.configureEach {
+			usesService(mutex)
 		}
 	}
 

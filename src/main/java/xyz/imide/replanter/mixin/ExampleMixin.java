@@ -1,6 +1,6 @@
-package com.example.modtemplate.mixin;
+package xyz.imide.replanter.mixin;
 
-import com.example.modtemplate.ModTemplate;
+import xyz.imide.replanter.ModTemplate;
 import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;

@@ -22,6 +22,15 @@ platform {
 		required("neoforge") {
 			forgeLikeVersionRange.set("[1,)")
 		}
+		required("yacl") {
+			forgeLikeVersionRange = prop("deps.yacl")
+			slug("yacl")
+		}
+
+		required("kotlin-for-forge") {
+			slug("kotlin-for-forge")
+			forgeLikeVersionRange = prop("deps.kotlin-for-forge")
+		}
 	}
 }
 
@@ -61,11 +70,15 @@ neoForge {
 repositories {
 	mavenCentral()
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	strictMaven("https://maven.isxander.dev/releases", "dev.isxander") { name = "Xander" }
+	strictMaven("https://thedarkcolour.github.io/KotlinForForge/", "thedarkcolour") { name = "KotlinForForge" }
 }
 
 dependencies {
 	// implementation(libs.moulberry.mixinconstraints)
 	// jarJar(libs.moulberry.mixinconstraints)
+	implementation("thedarkcolour:kotlinforforge-neoforge:${prop("deps.kotlin-for-forge")}")
+	implementation("dev.isxander:yet-another-config-lib:${prop("deps.yacl")}")
 }
 
 tasks.named("createMinecraftArtifacts") {

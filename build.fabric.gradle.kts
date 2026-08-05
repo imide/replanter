@@ -29,6 +29,13 @@ platform {
 		required("fabricloader") {
 			fabricLikeVersionRange = ">=${prop("deps.fabric-loader")}"
 		}
+		required("fabric-language-kotlin") {
+			fabricLikeVersionRange = prop("deps.fabric-language-kotlin")
+		}
+		required("yacl") {
+			slug("yacl")
+			fabricLikeVersionRange = prop("deps.yacl")
+		}
 		optional("modmenu") {}
 	}
 }
@@ -63,6 +70,7 @@ repositories {
 	mavenCentral()
 	strictMaven("https://maven.terraformersmc.com/", "com.terraformersmc") { name = "TerraformersMC" }
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	strictMaven("https://maven.isxander.dev/releases", "dev.isxander") { name = "Xander" }
 }
 
 configurations.all {
@@ -73,16 +81,12 @@ configurations.all {
 
 dependencies {
 	minecraft("com.mojang:minecraft:${prop("deps.minecraft")}")
-	if (sc.current.parsed < "26") {
-		mappings(loom.layered {
-			officialMojangMappings()
-			if (hasProperty("deps.parchment"))
-				parchment("org.parchmentmc.data:parchment-${prop("deps.parchment")}@zip")
-		})
-	}
+	loomx.applyMojangMappings()
 	modImplementation("net.fabricmc:fabric-loader:${prop("deps.fabric-loader")}")
 	// implementation(libs.moulberry.mixinconstraints)
 	// include(libs.moulberry.mixinconstraints)
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
+	modImplementation("net.fabricmc:fabric-language-kotlin:${prop("deps.fabric-language-kotlin")}")
+	modImplementation("dev.isxander:yet-another-config-lib:${prop("deps.yacl")}")
 	modLocalRuntime("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
 }
