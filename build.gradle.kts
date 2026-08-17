@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.sx)
 
     id("dev.kikugie.stonecutter")
-    id("dev.kikugie.postprocess.j52j") version "2.1-beta.3"
+    id("dev.kikugie.postprocess.j52j") version "2.1-beta.8"
     alias(libs.plugins.modstitch)
     id("me.modmuss50.mod-publish-plugin")
 
